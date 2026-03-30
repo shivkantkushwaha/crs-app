@@ -29,7 +29,7 @@ This project combines modern web technologies with machine learning to suggest t
 ```
 crsapp/
 ├── crs-client     # Frontend (Next.js)
-└── crs-serverpy   # Backend (FastAPI)
+└── crs-server   # Backend (FastAPI)
 ```
 
 ---
@@ -57,7 +57,7 @@ Each feature is developed in isolation and merged into `dev`, then promoted to `
 ## 🌐 Deployment
 
 * Frontend → Vercel
-* Backend → Render
+* Backend → Railway
 * Database → Supabase
 
 ---
