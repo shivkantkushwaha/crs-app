@@ -1,11 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// ─── Auth Middleware ───────────────────────────────────────────────────────────
-// Protects /dashboard/* routes — redirects to /auth/login if not signed in.
-// Refreshes Supabase session cookies on every request.
-// ─────────────────────────────────────────────────────────────────────────────
-
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -17,29 +12,23 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options?: Record<string, unknown> }[]) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
           supabaseResponse = NextResponse.next({ request });
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+            supabaseResponse.cookies.set(name, value, options as never)
           );
         },
       },
     }
   );
 
-  // IMPORTANT: Do not add logic between createServerClient and getUser()
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Protect /dashboard routes
   if (request.nextUrl.pathname.startsWith("/dashboard") && !user) {
-    const loginUrl = request.nextUrl.clone();
-    loginUrl.pathname = "/auth/login";
-    loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
-    return NextResponse.redirect(loginUrl);
+    return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
-  // Redirect already-logged-in users away from auth pages
   if (request.nextUrl.pathname.startsWith("/auth/") && user) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
