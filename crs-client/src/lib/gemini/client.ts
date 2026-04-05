@@ -5,10 +5,10 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // 2. Add to .env.local:  NEXT_PUBLIC_GEMINI_API_KEY=your-key
 // ─────────────────────────────────────────────────────────────────────────────
 
-const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY;
 
 if (!apiKey) {
-  throw new Error("[CRSAPP] NEXT_PUBLIC_GEMINI_API_KEY is missing from .env.local");
+  throw new Error("[CRSAPP] GEMINI_API_KEY is missing from .env.local");
 }
 
 export const genAI = new GoogleGenerativeAI(apiKey);
