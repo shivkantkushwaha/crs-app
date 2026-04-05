@@ -27,7 +27,7 @@ export async function sendMessage(
   history: { role: "user" | "model"; parts: [{ text: string }] }[],
   userMessage: string
 ): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash",
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash",
     systemInstruction: CRSAI_SYSTEM_PROMPT,
   });
   const chat = model.startChat({ history });
