@@ -1,3 +1,5 @@
+// crs-client/src/app/dashboard/profile/page.tsx
+
 "use client";
 import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

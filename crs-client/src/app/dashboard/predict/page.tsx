@@ -1,3 +1,5 @@
+// crs-client/src/app/dashboard/predict/page.tsx
+
 "use client";
 import { useState } from "react";
 import { usePredict } from "@/hooks/use-predict";

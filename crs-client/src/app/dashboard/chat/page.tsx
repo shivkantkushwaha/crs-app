@@ -1,3 +1,5 @@
+// crs-client/src/app/dashboard/chat/page.tsx
+
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { useChat } from "@/hooks/use-chat";
