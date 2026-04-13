@@ -15,16 +15,17 @@ export async function sendMessage(
   history: { role: "user" | "model"; parts: [{ text: string }] }[],
   userMessage: string
 ): Promise<string> {
-  if (!genAI) {
-    return "CRSAI is currently unavailable. Gemini API Key Quota limit reached. The API key is not configured. Please contact the administrator.";
-  }
-
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-    systemInstruction: CRSAI_SYSTEM_PROMPT,
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ history, message: userMessage }),
   });
 
-  const chat = model.startChat({ history });
-  const result = await chat.sendMessage(userMessage);
-  return result.response.text();
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error ?? "Chat request failed");
+  }
+
+  const data = await res.json();
+  return data.reply;
 }
