@@ -16,7 +16,7 @@ export async function sendMessage(
   userMessage: string
 ): Promise<string> {
   if (!genAI) {
-    return "CRSAI is currently unavailable. The API key is not configured. Please contact the administrator.";
+    return "CRSAI is currently unavailable. Gemini API Key Quota limit reached. The API key is not configured. Please contact the administrator.";
   }
 
   const model = genAI.getGenerativeModel({
